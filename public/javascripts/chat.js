@@ -1,5 +1,5 @@
 ﻿$(function() {
-	var socket = io.connect('http://localhost');
+	var socket = io.connect('http://greenine.c.node-ninja.com');
 	socket.on('connect', function() {
 		console.log('connected');
 	});
