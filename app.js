@@ -1,14 +1,34 @@
-
+﻿
 /**
  * Module dependencies.
  */
 
 var express = require('express')
-  , app = express()
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
- 
+  , path = require('path')
+  , twitter = require('ntwitter')
+  , http = require('http');
+
+//M_Checker_Dev
+var M_Checker = new twitter({
+	consumer_key: 'r9uQI2wfLgjg8ys64org',
+	consumer_secret: 'KVAnnxZy0ZQzz7AtHqfhGzDl67KrIx2jojPTljo5g',
+	access_token_key: '581590836-QJCJcEmE8TJpolYDhAtGTnywMqlO9DUIFggwp17P',
+	access_token_secret: 'zY8GPVjTSSlREaonrA2DVTXVCWXENzDdJt434Jkw'
+});
+
+var channelTable = {
+	'#mnr-chat1': 'Jus1',
+	'#mnr-chat2': 'Jus2',
+	'#mnr-chat3': 'Jus3',
+	'#mnr-chat4': 'Jus4',
+	'#mnr-chat5': 'Jus5',
+	'#mnr-chat6': 'Jus6',
+	'#meteornaka': 'meteornaka'
+};
+
+var app = express()
 var topics = [];
 
 app.configure(function(){
@@ -36,10 +56,8 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 
 /* irc bot */
 var irc = require('irc');
-var ustreamId = Math.floor( Math.random()*899999 ) + 100000;
-ustreamId = 'ustreamer-' + ustreamId;
 
-var topicBot = new irc.Client('chat1.ustream.tv', ustreamId,{
+var topicBot = new irc.Client('chat1.ustream.tv', 'nodebot',{
     debug: false,
     channels: ['#mnr-chat1','#mnr-chat2','#mnr-chat3','#mnr-chat4','#mnr-chat5','#mnr-chat6','#meteornaka','#aot29'],
 });
@@ -52,14 +70,45 @@ io.sockets.on('connection', function (socket) {
 			case 'TOPIC':
 				//params.args[0] : channel
 				//params.args[1] : topic
+				//Topicを表示する
 				topics[params.args[0]] = params.args[0]+':'+params.args[1];
 				socket.emit('msg push', topics[params.args[0]]);
+				//Topicをツイート
+				var date = new Date()
+				if((hh = date.getHours()) < 10){ hh = "0" + hh; }
+				if((mm = date.getMinutes()) < 10){ mm = "0" + mm; }
+				if( typeof(channelTable[params.args[0]])  != 'undefined'){
+					M_Checker.post(
+						"http://api.twitter.com/1/statuses/update.json",
+						{status: "["+channelTable[params.args[0]]+" Topic] "+params.args[1]+" ("+hh+":"+mm+")"},
+						function(error, data){
+							console.log(data.text);
+						}
+					);
+					http.get({
+							host: 'www42.atpages.jp',
+							port: 80,
+							path: "/minolis2nd/M_Checker_Topic/setTopic.cgi?ch="+(params.args[0]).slice(1) + "&tp=" + encodeURIComponent(params.args[1])
+						},
+						function(res){
+							console.log('res.statusCode='+res.statusCode);
+						}
+					).on('error', function(e){
+						console.log('error message:'+e.message);
+					});
+				}
+				
 				break;
 			case 'rpl_topic':
 				//params.args[0] : username
 				//params.args[1] : channel
 				//params.args[2] : topic
 				topics[params.args[1]] = params.args[1]+':'+params.args[2];
+				break;
+			case 'PRIVMSG':
+				//params.args[0] : channel
+				//params.args[1] : message
+				//topicBot.say('何か');	//ボットの発言
 				break;
 			default:
 				//console.log(params);
