@@ -40,8 +40,8 @@ var ustreamId = Math.floor( Math.random()*899999 ) + 100000;
 ustreamId = 'ustreamer-' + ustreamId;
 
 var topicBot = new irc.Client('chat1.ustream.tv', ustreamId,{
-    debug: true,
-    channels: ['#meteornaka','#aot29'],
+    debug: false,
+    channels: ['#mnr-chat1','#mnr-chat2','#mnr-chat3','#mnr-chat4','#mnr-chat5','#mnr-chat6','#meteornaka','#aot29'],
 });
 
 /* socket.io */
