@@ -8,6 +8,8 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path');
+ 
+var topics = [];
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -38,7 +40,7 @@ var ustreamId = Math.floor( Math.random()*899999 ) + 100000;
 ustreamId = 'ustreamer-' + ustreamId;
 
 var topicBot = new irc.Client('chat1.ustream.tv', ustreamId,{
-    debug: false,
+    debug: true,
     channels: ['#meteornaka','#aot29'],
 });
 
@@ -50,11 +52,21 @@ io.sockets.on('connection', function (socket) {
 			case 'TOPIC':
 				//params.args[0] : channel
 				//params.args[1] : topic
-				socket.emit('msg push', params.args[0]+':'+params.args[1]);
+				topics[params.args[0]] = params.args[0]+':'+params.args[1];
+				socket.emit('msg push', topics[params.args[0]]);
+				break;
+			case 'rpl_topic':
+				//params.args[0] : username
+				//params.args[1] : channel
+				//params.args[2] : topic
+				topics[params.args[1]] = params.args[1]+':'+params.args[2];
 				break;
 			default:
 				//console.log(params);
 				break;
 		}
 	});
+	for(var key in topics){
+		socket.emit('msg push', topics[key]);
+	}
 });
