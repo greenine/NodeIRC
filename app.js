@@ -12,10 +12,10 @@ var express = require('express')
 
 //M_Checker_Dev
 var M_Checker = new twitter({
-	consumer_key: 'r9uQI2wfLgjg8ys64org',
-	consumer_secret: 'KVAnnxZy0ZQzz7AtHqfhGzDl67KrIx2jojPTljo5g',
-	access_token_key: '581590836-QJCJcEmE8TJpolYDhAtGTnywMqlO9DUIFggwp17P',
-	access_token_secret: 'zY8GPVjTSSlREaonrA2DVTXVCWXENzDdJt434Jkw'
+	consumer_key: '',
+	consumer_secret: '',
+	access_token_key: '',
+	access_token_secret: ''
 });
 
 var channelTable = {
