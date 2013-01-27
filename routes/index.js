@@ -34,13 +34,16 @@ exports.setDb = function(req, res){
         newTwiConf.accessTokenKey = req.query.accessTokenKey;
         newTwiConf.accessTokenSecret = req.query.accessTokenSecret;
         newTwiConf.save(function(err){
-            
+            console.log(err);
         });
     } else if( req.query.table == 'twiConf' ) {
         var streamTable = models.stream;
         var newStream = new streamTable();
         newStream.channel = req.query.channel;
         newStream.stream = req.query.stream;
+        newStream.save(function(err){
+            console.log(err);
+        });
     } else {
         console.log('unknown table');
     }
