@@ -38,12 +38,12 @@ var twiConf = twiConfTable.findOne({name:'M_Checker_Dev'},
 );
 
 var channelTable = {
-	'#mnr-chat1': 'Jus1',
-	'#mnr-chat2': 'Jus2',
-	'#mnr-chat3': 'Jus3',
-	'#mnr-chat4': 'Jus4',
-	'#mnr-chat5': 'Jus5',
-	'#mnr-chat6': 'Jus6',
+    '#mnr-chat1': 'Jus1',
+    '#mnr-chat2': 'Jus2',
+    '#mnr-chat3': 'Jus3',
+    '#mnr-chat4': 'Jus4',
+    '#mnr-chat5': 'Jus5',
+    '#mnr-chat6': 'Jus6',
     '#meteornaka': 'meteornaka',
     '#aot29': 'aot29'
 };
