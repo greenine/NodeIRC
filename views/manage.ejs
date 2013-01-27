@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  </head>
+  <body>
+    twitter Registor<br />
+    <form method="POST" action="setDb">
+        <input type="hidden" name="table" value="twiConf" />
+        name:<input type="text" name="name" /><br />
+        consumerKey:<input type="text" name="consumerKey" /><br />
+        consumerSecret:<input type="text" name="consumerSecret" /><br />
+        accessTokenKey:<input type="text" name="accessTokenKey" /><br />
+        accessTokenSecret:<input type="text" name="accessTokenSecret" /><br />
+        <input type="submit" value="登録" />
+    </form><br /><br />
+    stream key<br />
+    <form method="POST" action="setDb">
+        <input type="hidden" name="table" value="stream" />
+        channel:<input type="text" name="name" /><br />
+        stream:<input type="text" name="consumerKey" /><br />
+        <input type="submit" value="登録" />
+    </form><br /><br />
+  </body>
+</html>
