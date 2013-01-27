@@ -3,17 +3,22 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express' });
 };
 
-exports.topicViewer = function(req, res){
-  res.render('topicViewer', { title: 'topicViewer' });
+exports.minolisChTop = function(req, res){
+    res.render('minolisChTop', {
+        title:      'minolisChTop',
+        showCnt:    6,
+        jusIds:     new Array('minolis00001111', 'minolis222', 'minolis333', 'minolis444', 'minolis5555', 'minolis666'),
+        ustIds:     new Array('10149531', '10149544', '10149555', '10142588', '10149576', '10149592'),
+        chatIds:    new Array('mnr-chat1', 'mnr-chat2', 'mnr-chat3', 'mnr-chat4', 'mnr-chat5', 'mnr-chat6'),
+    });
 };
 
 exports.manage = function(req, res){
 	res.render('manage', {
         title: 'manage Page',
-        
     });
 };
 

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/javascripts/chat.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var clickCnt = new Array(0<% for(var j=0; j<showCnt-1; j++){ %>,0<% } %>);
+            <% for(var i=0; i<showCnt; i++){ %>
+            $("#Jus<%=i%>").click(function(){
+                $("#jus<%=i%>").toggle();
+            });
+            $("#Ust<%=i%>").click(function(){
+                $("#ust<%=i%>").toggle();
+            });
+            $("#Chat<%=i%>").click(function(){
+                clickCnt[<%=i%>]++;
+                $("#chat<%=i%>").toggle((clickCnt[<%=i%>] % 2)==1);
+                $("#node-topic<%=i%>").toggle((clickCnt[<%=i%>] % 2)==0);
+            });
+            <% } %>
+            $("#JusAll").click(function(){
+                <% for(var i=0; i<showCnt; i++){ %>
+                    $("#jus<%=i%>").show();
+                <% } %>
+            });
+            $("#UstAll").click(function(){
+                <% for(var i=0; i<showCnt; i++){ %>
+                    $("#ust<%=i%>").show();
+                <% } %>
+            });
+            $("#ChatAll").click(function(){
+                <% for(var i=0; i<showCnt; i++){ %>
+                    $("#chat<%=i%>").show();
+                    $("#node-topic<%=i%>").hide();
+                <% } %>
+            });
+            $("#HideAll").click(function(){
+                <% for(var i=0; i<showCnt; i++){ %>
+                    $("#jus<%=i%>").hide();
+                    $("#ust<%=i%>").hide();
+                    $("#chat<%=i%>").hide();
+                    $("#node-topic<%=i%>").show();
+                <% } %>
+            });
+        });
+    </script>
+  </head>
+  <body>
+    <div id="container" style="margin:0 auto;text-align:center;">
+        <table border="1">
+            <tr>
+                <td></td>
+                <td>stream</td>
+                <td>chat</td>
+                <td></td>
+            </tr>
+            <% for(var i=0; i<showCnt; i++){ %>
+            <tr>
+                <td>
+                    Jus<%=i+1%><br />
+                    <form>
+                        <input type="button" id="Jus<%=i%>" value="Jus" /><br />
+                        <input type="button" id="Ust<%=i%>" value="Ust" /><br />
+                        <input type="button" name="openWin" value="JusPop" onClick="window.open('http://www.justin.tv/<%=jusIds[i]%>/popout','','scrollbars=no,width=480,height=360');" /><br />
+                        <input type="button" name="openWin" value="UstPop" onClick="window.open('http://www.ustream.tv/channel/<%=ustIds[i]%>/pop-out','','scrollbars=no,width=480,height=360');" />
+                    </form>
+                </td>
+                <td>
+                    <div id="jus<%=i%>" style="display:none;">
+                        <object type="application/x-shockwave-flash" height="360" width="480" id="live_embed_player_flash" data="http://www.justin.tv/widgets/live_embed_player.swf?channel=<%=jusIds[i]%>" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.justin.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="channel=<%=jusIds[i]%>&auto_play=false&start_volume=25" /></object>
+                    </div>
+                    <div id="ust<%=i%>" style="display:none;">
+                        <object classid='clsid:<%=i%>' width="480" height="360" id='utv<%=i%>'><param name='flashvars' value='autoplay=false&brand=embed&cid=<%=ustIds[i]%>&locale=ja_JP&v3=<%=i%>'/><param name='allowfullscreen' value='true'/><param name='allowscriptaccess' value='always'/><param name='movie' value='http://www.ustream.tv/flash/viewer.swf'/><embed flashvars='autoplay=false&brand=embed&cid=<%=ustIds[i]%>&locale=ja_JP&v3=<%=i%>' width='480' height='360' allowfullscreen='true' allowscriptaccess='always' id='utv<%=i%>' name='utv_n_<%=i%>' src='http://www.ustream.tv/flash/viewer.swf' type='application/x-shockwave-flash' /></object>
+                    </div>
+                </td>
+                <td>
+                    <div id="chat<%=i%>" style="display:none;">
+                        <EMBED width="480" height="360" id="chat<%=i%>" type='application/x-shockwave-flash' flashvars='channelId=4122686&brandId=1&channel=#<%=chatIds[i]%>&server=chat1.ustream.tv' pluginspage='http://www.adobe.com/go/getflashplayer' src='http://www.ustream.tv/flash/irc.swf' allowfullscreen='true'>
+                    </div>
+                    <div id="node-topic<%=i%>">
+                        Jus<%=i+1%> : <span id="<%=chatIds[i]%>"></span><br />
+                    </div>
+                </td>
+                <td><button id="Chat<%=i%>">chat</button></td>
+            </tr>
+            <% } %>
+            <tr>
+                <td>
+                    <button id="JusAll">JusAll</button><br />
+                    <button id="UstAll">UstAll</button><br />
+                    <button id="HideAll">HideAll</button>
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button id="ChatAll">ChatAll</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+	<br /><br />
+	meteornaka : <span id="meteornaka"></span><br />
+	aot29 : <span id="aot29"></span><br />
+  </body>
+</html>

@@ -67,7 +67,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/topicViewer', routes.topicViewer);
+app.get('/minolisChTop', routes.minolisChTop);
 app.get('/manage', routes.manage);
 app.post('/setDb', routes.setDb);
 
