@@ -1,5 +1,5 @@
 ﻿$(function() {
-	var socket = io.connect('http://greenine.c.node-ninja.com');
+	var socket = io.connect('http://localhost');
 	socket.on('connect', function() {
 		console.log('connected');
 	});
@@ -16,7 +16,7 @@
 		msgArr = msg.split(':');
 		msgChannel = msgArr[0];
 		msgArr.splice(0,1);
-		msgBody = msgArr.join('');
+		msgBody = msgArr.join(':');
 		$(msgChannel).text(msgBody);
 	});
 	
