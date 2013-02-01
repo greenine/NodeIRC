@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Module dependencies.
  */
 // import libs
@@ -92,75 +92,92 @@ var tTopic = new Array(),
 topicBot.addListener('raw', function (params) {
     switch(params.command){
         case 'PRIVMSG':
-            //params.args[0] : channel
+            //params.args[0] : channel or username
             //params.args[1] : message
-            if(params.args[1].match(/^[#＃][tｔmｍcｃ][:> ：＞　]/i)){
-                if(topicBot.chans[params.args[0]].users[ustreamId].match(/@/)){
-                    if(params.args[1].match(/^[#＃][tｔ][:> ：＞　]/i)) {
-                        //#tに対する処理
-                        if(RegExp.rightContext != ''){
-                            tTopic[params.args[0]] = RegExp.rightContext + ' ';
-                        }
-                        else{
-                            tTopic[params.args[0]] = RegExp.rightContext;
-                        }
-                        if(mTopic[params.args[0]] == null){
-                            mTopic[params.args[0]] ='';
-                        }
-                        topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]] + mTopic[params.args[0]] + cTopic);
-                    } else if(params.args[1].match(/^[#＃][mｍ][:> ：＞　]/i)) {
-                        //#mに対する処理
-                        if(RegExp.rightContext != ''){
-                            mTopic[params.args[0]] = RegExp.rightContext + ' ';
-                        }
-                        else{
-                            mTopic[params.args[0]] = RegExp.rightContext;
-                        }
-                        if(tTopic[params.args[0]] == null){
-                            tTopic[params.args[0]] ='';
-                        }
-                        topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]]+ mTopic[params.args[0]] + cTopic);
-                        //mongoDBのtopicテーブルを更新する
-                        var topicRow = new topicTable();
-                        var topicDataList = {
-                            topic: {
-                                m: mTopic[params.args[0]],
-                                c: cTopic
+            if( params.args[0] === 'mebius29' ){
+                //トークの場合
+                //stream表示コマンド受け取り
+                if( params.args[1].match(/^[#＃][sｓ][:> ：＞　]/i) ){
+                    //#sでストリーム表示受付
+                    //usernameとpasswordを聞く
+                    //mongoDBに問い合わせ正しくなかったら拒否する？or３回聞きなおす
+                    //OKならログ内容と取ることを確認
+                    //ログ確認OK出たらstreamをトークで送信する
+                    //ログ確認拒否なら表示しない
+                    //ダメなら棄却
+                }
+                topicBot.say(params.nick, 'トークを受け取りました');
+            } else {
+                //通常発言
+                if(params.args[1].match(/^[#＃][tｔmｍcｃ][:> ：＞　]/i)){
+                    if(topicBot.chans[params.args[0]].users[ustreamId].match(/@/)){
+                        if(params.args[1].match(/^[#＃][tｔ][:> ：＞　]/i)) {
+                            //#tに対する処理
+                            if(RegExp.rightContext != ''){
+                                tTopic[params.args[0]] = RegExp.rightContext + ' ';
                             }
-                        };
-                        topicRow.update(
-                            { channel: params.args[0] },
-                            { $set: topicDataList },
-                            { upsert: TRUE },
-                            function(err){ if(err){ return; } }
-                        );
-                        
-                    }else if(params.args[1].match(/^[#＃][cｃ][:> ：＞　]/i)){
-                        //#cに対する処理
-                        cTopic = RegExp.rightContext;
-                        if(tTopic[params.args[0]] == null){ tTopic[params.args[0]] =''; }
-                        if(mTopic[params.args[0]] == null){ mTopic[params.args[0]] =''; }
-                        topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]] + mTopic[params.args[0]] + cTopic);
-                        //mongoDBに保存する処理
-                        var topicRow = new topicTable();
-                        var topicDataList = {
-                            topic: {
-                                m: mTopic[params.args[0]],
-                                c: cTopic
+                            else{
+                                tTopic[params.args[0]] = RegExp.rightContext;
                             }
-                        };
-                        topicRow.update(
-                            { channel: params.args[0] },
-                            { $set: topicDataList },
-                            { upsert: TRUE },
-                            function(err){ if(err){ return; } }
-                        );
+                            if(mTopic[params.args[0]] == null){
+                                mTopic[params.args[0]] ='';
+                            }
+                            topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]] + mTopic[params.args[0]] + cTopic);
+                        } else if(params.args[1].match(/^[#＃][mｍ][:> ：＞　]/i)) {
+                            //#mに対する処理
+                            if(RegExp.rightContext != ''){
+                                mTopic[params.args[0]] = RegExp.rightContext + ' ';
+                            }
+                            else{
+                                mTopic[params.args[0]] = RegExp.rightContext;
+                            }
+                            if(tTopic[params.args[0]] == null){
+                                tTopic[params.args[0]] ='';
+                            }
+                            topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]]+ mTopic[params.args[0]] + cTopic);
+                            //mongoDBのtopicテーブルを更新する
+                            var topicRow = new topicTable();
+                            var topicDataList = {
+                                topic: {
+                                    m: mTopic[params.args[0]],
+                                    c: cTopic
+                                }
+                            };
+                            topicRow.update(
+                                { channel: params.args[0] },
+                                { $set: topicDataList },
+                                { upsert: TRUE },
+                                function(err){ if(err){ return; } }
+                            );
+                            
+                        }else if(params.args[1].match(/^[#＃][cｃ][:> ：＞　]/i)){
+                            //#cに対する処理
+                            cTopic = RegExp.rightContext;
+                            if(tTopic[params.args[0]] == null){ tTopic[params.args[0]] =''; }
+                            if(mTopic[params.args[0]] == null){ mTopic[params.args[0]] =''; }
+                            topicBot.send('TOPIC', params.args[0], tTopic[params.args[0]] + mTopic[params.args[0]] + cTopic);
+                            //mongoDBに保存する処理
+                            var topicRow = new topicTable();
+                            var topicDataList = {
+                                topic: {
+                                    m: mTopic[params.args[0]],
+                                    c: cTopic
+                                }
+                            };
+                            topicRow.update(
+                                { channel: params.args[0] },
+                                { $set: topicDataList },
+                                { upsert: TRUE },
+                                function(err){ if(err){ return; } }
+                            );
+                        }
+                    }else{
+                        topicBot.say(params.args[0], 'このコマンドの実行にはオペレータ権限が必要です');
                     }
-                }else{
-                    topicBot.say(params.args[0], 'このコマンドの実行にはオペレータ権限が必要です');
                 }
             }
-            console.log(topicBot.chans[params.args[0]].users[ustreamId]);
+            //console.log(topicBot.chans[params.args[0]].users[ustreamId]);
+            //console.log(params);
             break;
         case 'TOPIC':
             //Topicをツイート
@@ -192,7 +209,7 @@ topicBot.addListener('raw', function (params) {
             //console.log(params);
             break;
         default:
-            console.log(params);
+            //console.log(params);
             break;
         }
 });
