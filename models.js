@@ -1,4 +1,4 @@
-﻿var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var topicjsDb = mongoose.connect('mongodb://localhost/topicjs');
 
 var topicSchema = new mongoose.Schema({
@@ -7,7 +7,7 @@ var topicSchema = new mongoose.Schema({
 		c:String,
 		m:String
 	},
-	create_at: { type: Date, default: Date.now }
+	createAt: { type: Date, default: Date.now }
 });
 var streamSchema = new mongoose.Schema({
 	channel:String,

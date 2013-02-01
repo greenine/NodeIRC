@@ -1,4 +1,4 @@
-﻿/*
+ /*
  * GET home page.
  */
 
@@ -17,35 +17,59 @@ exports.minolisChTop = function(req, res){
 };
 
 exports.manage = function(req, res){
-	res.render('manage', {
-        title: 'manage Page',
-    });
+	res.render('manage',
+        {
+            title: 'manage Page'
+        }
+    );
 };
 
 exports.setDb = function(req, res){
     var models = require('../models');
-    
-    if(req.query.table == 'twiConf'){
+    var registParamList = new Array();
+    if(req.body.table == 'twiConf'){
         var twiConfTable = models.twiConf;
         var newTwiConf = new twiConfTable();
-        newTwiConf.name = req.query.name;
-        newTwiConf.consumerKey = req.query.consumerKey;
-        newTwiConf.consumerSecret = req.query.consumerSecret;
-        newTwiConf.accessTokenKey = req.query.accessTokenKey;
-        newTwiConf.accessTokenSecret = req.query.accessTokenSecret;
-        newTwiConf.save(function(err){
-            console.log(err);
-        });
-    } else if( req.query.table == 'twiConf' ) {
+        registParamList = {
+            consumerKey: req.body.consumerKey,
+            consumerSecret: req.body.consumerSecret,
+            accessTokenKey: req.body.accessTokenKey,
+            accessTokenSecret: req.body.accessTokenSecret
+        };
+        newTwiConf.update(
+            { name: req.body.name },
+            { $set: registParamList },
+            { upsert: TRUE },
+            function(err){ console.log(err); }
+        );
+        res.render('registResult',
+            {
+                title: 'Twitter Config Regist Complete',
+                registTable: req.body.table,
+                registParams: registParamList
+            }
+        );
+    } else if( req.body.table == 'stream' ) {
         var streamTable = models.stream;
         var newStream = new streamTable();
-        newStream.channel = req.query.channel;
-        newStream.stream = req.query.stream;
-        newStream.save(function(err){
-            console.log(err);
-        });
+        registParamList = {
+            stream: req.body.stream
+        }
+        newStream.update(
+            { channel: req.body.channel },
+            { $set: registParamList },
+            { upsert: TRUE },
+            function(err){ console.log(err); }
+        );
+        res.render('registResult',
+            {
+                title: 'Stream Regist Complete',
+                registTable: req.body.table,
+                registParams: registParamList
+            }
+        );
     } else {
         console.log('unknown table');
     }
-    res.render('index', { title: 'Result' });
+    res.render('registParams', { title: 'Error' } );
 };
