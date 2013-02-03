@@ -27,49 +27,140 @@ exports.manage = function(req, res){
 exports.setDb = function(req, res){
     var models = require('../models');
     var registParamList = new Array();
-    if(req.body.table == 'twiConf'){
+    var reqParams = new Array();
+    for( reqBodyKey in req.body ){
+        reqParams[reqBodyKey] = req.body[reqBodyKey];
+    }
+    //var reqParams = escape(req.body);
+    if(reqParams.table == 'twiConf'){
         var twiConfTable = models.twiConf;
         var newTwiConf = new twiConfTable();
+
         registParamList = {
-            consumerKey: req.body.consumerKey,
-            consumerSecret: req.body.consumerSecret,
-            accessTokenKey: req.body.accessTokenKey,
-            accessTokenSecret: req.body.accessTokenSecret
+            consumerKey: reqParams.consumerKey,
+            consumerSecret: reqParams.consumerSecret,
+            accessTokenKey: reqParams.accessTokenKey,
+            accessTokenSecret: reqParams.accessTokenSecret
         };
-        newTwiConf.update(
-            { name: req.body.name },
-            { $set: registParamList },
-            { upsert: TRUE },
-            function(err){ console.log(err); }
+
+        twiConfTable.findOne(
+            { name: reqParams.name },
+            function( err, row ){
+                
+                if( err ) console.log( err );
+                if( row ){
+                    console.log("row found!");
+                    twiConfTable.update(
+                        { name: reqParams.name },
+                        { $set: registParamList },
+                        function(err){ console.log(err); }
+                    );
+                } else {
+                    console.log("row not found");
+                    newTwiConf.name = reqParams.name;
+                    newTwiConf.consumerKey = reqParams.consumerKey;
+                    newTwiConf.consumerSecret = reqParams.consumerSecret;
+                    newTwiConf.accessTokenKey = reqParams.accessTokenKey;
+                    newTwiConf.accessTokenSecret = reqParams.accessTokenSecret;
+                    newTwiConf.save();
+                }
+            }
         );
+
         res.render('registResult',
             {
                 title: 'Twitter Config Regist Complete',
-                registTable: req.body.table,
+                registTable: reqParams.table,
+                registKey: reqParams.name,
                 registParams: registParamList
             }
         );
-    } else if( req.body.table == 'stream' ) {
+    } else if( reqParams.table == 'stream' ) {
         var streamTable = models.stream;
         var newStream = new streamTable();
+
         registParamList = {
-            stream: req.body.stream
-        }
-        newStream.update(
-            { channel: req.body.channel },
-            { $set: registParamList },
-            { upsert: TRUE },
-            function(err){ console.log(err); }
+            jusFMSUrl: reqParams.jusFMSUrl,
+            jusStream: reqParams.jusStream,
+            jusAddress: reqParams.jusAddress,
+            ustFMSUrl: reqParams.ustFMSUrl,
+            ustStream: reqParams.ustStream,
+            ustAddress: reqParams.ustAddress
+        };
+
+        streamTable.findOne(
+            { channel: reqParams.channel },
+            function( err, row ){
+                
+                if( err ) console.log( err );
+                if( row ){
+                    console.log("row found!");
+                    streamTable.update(
+                        { channel: reqParams.channel },
+                        { $set: registParamList },
+                        function(err){ console.log(err); }
+                    );
+                } else {
+                    console.log("row not found");
+                    newStream.channel = reqParams.channel;
+                    newStream.jusFMSUrl = reqParams.jusFMSUrl;
+                    newStream.jusStream = reqParams.jusStream;
+                    newStream.jusAddress = reqParams.jusAddress;
+                    newStream.ustFMSUrl = reqParams.ustFMSUrl;
+                    newStream.ustStream = reqParams.ustStream;
+                    newStream.ustAddress = reqParams.ustAddress;
+                    newStream.save();
+                }
+            }
         );
+        
         res.render('registResult',
             {
                 title: 'Stream Regist Complete',
-                registTable: req.body.table,
+                registTable: reqParams.table,
+                registKey: reqParams.channel,
+                registParams: registParamList
+            }
+        );
+    } else if( reqParams.table == "password" ){
+        var passwordTable = models.password;
+        var newPassword = new passwordTable();
+
+        registParamList = {
+            password: reqParams.password
+        };
+
+        passwordTable.findOne(
+            { type: reqParams.type },
+            function( err, row ){
+                
+                if( err ) console.log( err );
+                if( row ){
+                    console.log("row found!");
+                    passwordTable.update(
+                        { type: reqParams.type },
+                        { $set: registParamList },
+                        function(err){ console.log(err); }
+                    );
+                } else {
+                    console.log("row not found");
+                    newPassword.type = reqParams.type;
+                    newPassword.password = reqParams.password;
+                    newPassword.save();
+                }
+            }
+        );
+
+        res.render('registResult',
+            {
+                title: 'Password Regist Complete',
+                registTable: reqParams.table,
+                registKey: reqParams.type,
                 registParams: registParamList
             }
         );
     } else {
         console.log('unknown table');
+        res.render('registResult', { title: 'Error' } );
     }
-    res.render('registParams', { title: 'Error' } );
 };

@@ -2,11 +2,9 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   </head>
   <body>
-    twitter Registor<br />
+    Twitter Register<br />
     <form method="POST" action="setDb">
         <input type="hidden" name="table" value="twiConf" />
         name:<input type="text" name="name" /><br />
@@ -16,11 +14,23 @@
         accessTokenSecret:<input type="text" name="accessTokenSecret" /><br />
         <input type="submit" value="登録" />
     </form><br /><br />
-    stream key<br />
+    Stream Register<br />
     <form method="POST" action="setDb">
         <input type="hidden" name="table" value="stream" />
-        channel:<input type="text" name="name" /><br />
-        stream:<input type="text" name="consumerKey" /><br />
+        channel:<input type="text" name="channel" /><br />
+        jusFMSUrl:<input type="text" name="jusFMSUrl" /><br />
+        jusStream:<input type="text" name="jusStream" /><br />
+        jusAddress:<input type="text" name="jusAddress" /><br />
+        ustFMSUrl:<input type="text" name="ustFMSUrl" /><br />
+        ustStream:<input type="text" name="ustStream" /><br />
+        ustAddress:<input type="text" name="ustAddress" /><br />
+        <input type="submit" value="登録" />
+    </form><br /><br />
+    Password Register<br />
+    <form method="POST" action="setDb">
+        <input type="hidden" name="table" value="password" />
+        type:<input type="text" name="type" /><br />
+        password:<input type="text" name="password" /><br />
         <input type="submit" value="登録" />
     </form><br /><br />
   </body>

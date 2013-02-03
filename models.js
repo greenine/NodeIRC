@@ -10,25 +10,32 @@ var topicSchema = new mongoose.Schema({
 	createAt: { type: Date, default: Date.now }
 });
 var streamSchema = new mongoose.Schema({
-	channel:String,
-	stream:String
+	channel:    String,
+	jusFMSUrl:  String,
+	jusStream:  String,
+	jusAddress:	String,
+	ustFMSUrl:  String,
+	ustStream:  String,
+	ustAddress: String,
+	createAt:   { type: Date, default: Date.now }
 });
 var twiConfSchema = new mongoose.Schema({
 	name:String,
 	consumerKey:String,
 	consumerSecret:String,
 	accessTokenKey:String,
-	accessTokenSecret:String
-});
-var streamLogSchema = new mongoose.Schema({
-	channel:String,
-	username:String,
-	userIp:String,
+	accessTokenSecret:String,
 	createAt: { type: Date, default: Date.now }
 });
-var userSchema = new mongoose.Schema({
-	username:String,
-	password:String,
+var streamLogSchema = new mongoose.Schema({
+	nickname: String,
+	username: String,
+	userHost: String,
+	createAt: { type: Date, default: Date.now }
+});
+var passwordSchema = new mongoose.Schema({
+	type: String,
+	password: String,
 	createAt: { type: Date, default: Date.now }
 });
 
@@ -36,4 +43,4 @@ exports.topic = topicjsDb.model('topic', topicSchema);
 exports.stream = topicjsDb.model('stream', streamSchema);
 exports.twiConf = topicjsDb.model('twiConf', twiConfSchema);
 exports.streamLog = topicjsDb.model('streamLog', streamLogSchema);
-exports.user = topicjsDb.model('user', userSchema);
+exports.password = topicjsDb.model('password', passwordSchema);
