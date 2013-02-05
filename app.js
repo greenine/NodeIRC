@@ -77,7 +77,7 @@ var topicBot = new irc.Client(
         debug: false,
         userName: 'nodebot',
         realName: 'nodeJS IRC client',
-        channels: ['#meteornaka']
+        channels: ['#meteornaka', '#aot29']
     }
 );
 
