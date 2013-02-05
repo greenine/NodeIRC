@@ -1,0 +1,16 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+</head>
+<body>
+    <% for( var i=0; i<logs.length; i++ ){ %>
+        ----------------------------------------------------<br />
+        nickname: <%=logs[i]['nickname']%><br />
+        username: <%=logs[i]['username']%><br />
+        host:     <%=logs[i]['userHost']%><br />
+        createAt: <%=logs[i]['createAt']%><br />
+    <% } %>
+</body>
+</html>
