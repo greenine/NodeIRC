@@ -24,6 +24,31 @@ exports.manage = function(req, res){
     );
 };
 
+exports.logs = function(req, res){
+    var models = require("../models");
+    var streamLogTable = models.streamLog;
+    var streamLogList = new Array();
+
+    streamLogTable.find({},
+        function(err, logs){
+            if(err){
+                console.log(err);
+                res.render( "logs", {
+                    title: "Log",
+                    logs: []
+                } );
+                return;
+            } else {
+                res.render( "logs", {
+                    title: "Log",
+                    logs: logs
+                } );
+            }
+            
+        }
+    );
+};
+
 exports.setDb = function(req, res){
     var models = require('../models');
     var registParamList = new Array();

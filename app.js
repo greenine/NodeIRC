@@ -69,10 +69,10 @@ topicTable.find({},
 );
 
 /* irc bot */
-var ustreamId = 'mebius29';
+var botId = 'mebius29_';
 var topicBot = new irc.Client(
     'chat1.ustream.tv',
-    ustreamId,
+    botId,
     {
         debug: false,
         userName: 'nodebot',
@@ -109,6 +109,8 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/minolisChTop', routes.minolisChTop);
 app.get('/manage', routes.manage);
+app.get("/logs", routes.logs);
+
 app.post('/setDb', routes.setDb);
 
 var server = http.createServer(app).listen(app.get('port'),
@@ -122,7 +124,7 @@ topicBot.addListener('raw', function (params) {
         case 'PRIVMSG':
             //params.args[0] : channel or username
             //params.args[1] : message
-            if( params.args[0] === 'mebius29' ){
+            if( params.args[0] === botId ){
                 //トークの場合
                 if( typeof(streamStatus[params.nick]) === 'undefined' || streamStatus[params.nick] === 0 ){
                     //strem問い合わせ状態でないとき
@@ -201,6 +203,7 @@ topicBot.addListener('raw', function (params) {
                                             topicBot.say( params.nick, "ustStream: "+rows[i]["ustStream"] );
                                             topicBot.say( params.nick, "ustAddress: "+rows[i]["ustAddress"] );
                                         }
+                                        topicBot.say( params.nick, "表示完了" );
                                     }
                                     
                                 }
@@ -219,7 +222,7 @@ topicBot.addListener('raw', function (params) {
             } else {
                 //通常発言
                 if(params.args[1].match(/^[#＃][tｔmｍcｃ][:> ：＞　]/i)){
-                    if(topicBot.chans[params.args[0]].users[ustreamId].match(/@/)){
+                    if(topicBot.chans[params.args[0]].users[botId].match(/@/)){
                         if(params.args[1].match(/^[#＃][tｔ][:> ：＞　]/i)) {
                             //#tに対する処理
                             if(RegExp.rightContext != ''){
@@ -311,7 +314,7 @@ topicBot.addListener('raw', function (params) {
                     }
                 }
             }
-            //console.log(topicBot.chans[params.args[0]].users[ustreamId]);
+            //console.log(topicBot.chans[params.args[0]].users[botId]);
             //console.log(params);
             break;
         case 'TOPIC':
