@@ -38,15 +38,19 @@ var twiConf = twiConfTable.findOne({name:'M_Checker_Dev'},
 );
 
 var channelTable = {
-    '#mnr-chat1': 'Jus1',
-    '#mnr-chat2': 'Jus2',
-    '#mnr-chat3': 'Jus3',
-    '#mnr-chat4': 'Jus4',
-    '#mnr-chat5': 'Jus5',
-    '#mnr-chat6': 'Jus6',
-    '#meteornaka': 'meteornaka',
-    '#aot29': 'aot29'
+    '#mnrl1': 'Jus1',
+    '#mnrl2': 'Jus2',
+    '#mnrl3': 'Jus3',
+    '#mnrl4': 'Jus4',
+    '#mnrl5': 'Jus5',
+    '#mnrl6': 'Jus6',
 };
+
+var joinChannelList = new Array();
+//channelTableに設定されたチャンネルにBotが入る
+for( var ch in channelTable ){
+    joinChannelList.push(ch);
+}
 
 var chanDataList    = new Array();
 var streamPassRow   = "";
@@ -69,7 +73,7 @@ topicTable.find({},
 );
 
 /* irc bot */
-var botId = 'mebius29_';
+var botId = 'mebius29';
 var topicBot = new irc.Client(
     'chat1.ustream.tv',
     botId,
@@ -77,7 +81,7 @@ var topicBot = new irc.Client(
         debug: false,
         userName: 'nodebot',
         realName: 'nodeJS IRC client',
-        channels: ['#meteornaka', '#aot29']
+        channels: joinChannelList
     }
 );
 
