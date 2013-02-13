@@ -153,7 +153,7 @@ topicBot.addListener('raw', function (params) {
                     }
                 } else{
                     //stream問い合わせ中
-                    if( 10 <= streamStatus[params.nick] && streamStatus[params.nick] < 12 ){
+                    if( 10 <= streamStatus[params.nick] && streamStatus[params.nick] <= 12 ){
                         //password問い合わせ
                         //３回まで問い合わせできる
                         streamStatus[params.nick]++;
@@ -164,7 +164,8 @@ topicBot.addListener('raw', function (params) {
                         } else {
                             topicBot.say(params.nick, "passwordが違います。もう一度入力してください。");
                         }
-                    } else if( 12 <= streamStatus[params.nick] && streamStatus[params.nick] < 20 ){
+                    }
+                    if( 12 < streamStatus[params.nick] && streamStatus[params.nick] < 20 ){
                         //password3回以上間違えたのでstatusを0に戻す
                         streamStatus[params.nick] = 0;
                         topicBot.say(params.nick, '入力ミス上限回数を超えました。passwordを確認してからもう一度問い合わせてください。');
