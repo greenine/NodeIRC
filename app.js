@@ -79,7 +79,7 @@ var topicBot = new irc.Client(
     botId,
     {
         debug: false,
-        userName: 'nodebot',
+        userName: 'mebius29',
         realName: 'nodeJS IRC client',
         channels: joinChannelList
     }
@@ -177,11 +177,11 @@ topicBot.addListener('raw', function (params) {
                         topicBot.say(params.nick, 'nickname : ' + params.nick);
                         topicBot.say(params.nick, 'username : ' + params.user);
                         topicBot.say(params.nick, 'host : ' + params.host);
-                        topicBot.say(params.nick, 'okの場合はyes, ダメな場合はそれ以外の文字を入力してください');
+                        topicBot.say(params.nick, 'okの場合はyesまたはok, ダメな場合はそれ以外の文字を入力してください');
                         streamStatus[params.nick] = 30;
                     } else if( streamStatus[params.nick] === 30 ){
                         //yes or else
-                        if( params.args[1].match(/^[yｙ][eｅ][sｓ]/i) ){
+                        if( params.args[1].match(/^[yｙ][eｅ][sｓ]/i) || params.args[1].match(/^[oｏ][kｋ]/i) ){
                             //ログ保存処理
                             var streamLog = new streamLogTable();
                             streamLog.nickname = params.nick;
@@ -201,9 +201,9 @@ topicBot.addListener('raw', function (params) {
                                         for( var i=0; i<rows.length; i++ ){
                                             topicBot.say( params.nick, "-------------------------------" );
                                             topicBot.say( params.nick, "channel: "+rows[i]["channel"] );
-                                            topicBot.say( params.nick, "jusFMSUrl: "+rows[i]["jusFMSUrl"] );
+                                            topicBot.say( params.nick, "jusFMSUrl: "+rows[i]["jusFMSUrl"].replace(/\./g,"@")+" (@を.に置換して下さい)" );
                                             topicBot.say( params.nick, "jusStream: "+rows[i]["jusStream"] );
-                                            topicBot.say( params.nick, "jusAddress: "+rows[i]["jusAddress"] );
+                                            topicBot.say( params.nick, "jusAddress: "+rows[i]["jusAddress"].replace(/\./g,"@")+" (@を.に置換して下さい)" );
                                             topicBot.say( params.nick, "ustFMSUrl: "+rows[i]["ustFMSUrl"] );
                                             topicBot.say( params.nick, "ustStream: "+rows[i]["ustStream"] );
                                             topicBot.say( params.nick, "ustAddress: "+rows[i]["ustAddress"] );
