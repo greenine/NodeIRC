@@ -201,12 +201,9 @@ topicBot.addListener('raw', function (params) {
                                         for( var i=0; i<rows.length; i++ ){
                                             topicBot.say( params.nick, "-------------------------------" );
                                             topicBot.say( params.nick, "channel: "+rows[i]["channel"] );
-                                            topicBot.say( params.nick, "jusFMSUrl: "+rows[i]["jusFMSUrl"].replace(/\./g,"@")+" (@を.に置換して下さい)" );
                                             topicBot.say( params.nick, "jusStream: "+rows[i]["jusStream"] );
-                                            topicBot.say( params.nick, "jusAddress: "+rows[i]["jusAddress"].replace(/\./g,"@")+" (@を.に置換して下さい)" );
                                             topicBot.say( params.nick, "ustFMSUrl: "+rows[i]["ustFMSUrl"] );
                                             topicBot.say( params.nick, "ustStream: "+rows[i]["ustStream"] );
-                                            topicBot.say( params.nick, "ustAddress: "+rows[i]["ustAddress"] );
                                         }
                                     }
                                     

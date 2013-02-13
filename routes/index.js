@@ -105,12 +105,9 @@ exports.setDb = function(req, res){
         var newStream = new streamTable();
 
         registParamList = {
-            jusFMSUrl: reqParams.jusFMSUrl,
             jusStream: reqParams.jusStream,
-            jusAddress: reqParams.jusAddress,
             ustFMSUrl: reqParams.ustFMSUrl,
             ustStream: reqParams.ustStream,
-            ustAddress: reqParams.ustAddress
         };
 
         streamTable.findOne(
@@ -128,12 +125,9 @@ exports.setDb = function(req, res){
                 } else {
                     console.log("row not found");
                     newStream.channel = reqParams.channel;
-                    newStream.jusFMSUrl = reqParams.jusFMSUrl;
                     newStream.jusStream = reqParams.jusStream;
-                    newStream.jusAddress = reqParams.jusAddress;
                     newStream.ustFMSUrl = reqParams.ustFMSUrl;
                     newStream.ustStream = reqParams.ustStream;
-                    newStream.ustAddress = reqParams.ustAddress;
                     newStream.save();
                 }
             }

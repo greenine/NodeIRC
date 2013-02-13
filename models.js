@@ -11,12 +11,9 @@ var topicSchema = new mongoose.Schema({
 });
 var streamSchema = new mongoose.Schema({
 	channel:    String,
-	jusFMSUrl:  String,
 	jusStream:  String,
-	jusAddress:	String,
 	ustFMSUrl:  String,
 	ustStream:  String,
-	ustAddress: String,
 	createAt:   { type: Date, default: Date.now }
 });
 var twiConfSchema = new mongoose.Schema({
