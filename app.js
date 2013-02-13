@@ -208,7 +208,6 @@ topicBot.addListener('raw', function (params) {
                                             topicBot.say( params.nick, "ustStream: "+rows[i]["ustStream"] );
                                             topicBot.say( params.nick, "ustAddress: "+rows[i]["ustAddress"] );
                                         }
-                                        topicBot.say( params.nick, "表示完了" );
                                     }
                                     
                                 }
