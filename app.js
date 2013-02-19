@@ -322,7 +322,9 @@ topicBot.addListener('raw', function (params) {
             //Topicをツイート
             if(M_Checker != null){
                 var date = new Date();
-                if((hh = date.getHours()) < 10){ hh = "0" + hh; }
+                hh = date.getHours()+9;
+                hh = hh > 23? hh-24 : hh ;
+                if(hh < 10){ hh = "0" + hh; }
                 if((mm = date.getMinutes()) < 10){ mm = "0" + mm; }
                 if( typeof channelTable[params.args[0]]  !== 'undefined'){
                     M_Checker.post(
