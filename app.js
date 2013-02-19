@@ -111,11 +111,11 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/minolisChTop', routes.minolisChTop);
-app.get('/manage', routes.manage);
+//app.get('/minolisChTop', routes.minolisChTop);
+//app.get('/manage', routes.manage);
 app.get("/logs", routes.logs);
 
-app.post('/setDb', routes.setDb);
+//app.post('/setDb', routes.setDb);
 
 var server = http.createServer(app).listen(app.get('port'),
     function(){
