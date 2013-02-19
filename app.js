@@ -21,7 +21,7 @@ var topicTable      = models.topic,
 //変数定義
 var app = express();
 var M_Checker = null;
-var twiConf = twiConfTable.findOne({name:'M_Checker_Dev'},
+var twiConf = twiConfTable.findOne({name:'M_Checker'},
     function(err,params){
         if( params != null ){
             console.log('make twitter client');
