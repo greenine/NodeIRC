@@ -329,7 +329,7 @@ topicBot.addListener('raw', function (params) {
                 if( typeof channelTable[params.args[0]]  !== 'undefined'){
                     M_Checker.post(
                         "http://api.twitter.com/1/statuses/update.json",
-                        {status: "["+channelTable[params.args[0]]+" Topic] "+params.args[1]+" ("+hh+":"+mm+")"},
+                        {status: "["+channelTable[params.args[0]]+" Topic]"+params.args[1]+" ("+hh+":"+mm+")"},
                         function(error, data){ /*console.log(data.text);*/ }
                     );
                     http.get({
