@@ -335,7 +335,7 @@ topicBot.addListener('raw', function (params) {
                     http.get({
                             host: 'www42.atpages.jp',
                             port: 80,
-                            path: "/minolis2nd/M_Checker_Topic/setTopic.cgi?ch="+(params.args[0]).slice(1) + "&tp=" + encodeURIComponent(params.args[1])
+                            path: "/minolis2nd/M_Checker_Topic/setTopic.php?ch="+(params.args[0]).slice(1) + "&tp=" + encodeURIComponent(params.args[1])
                         },
                         function(res){
                             //console.log('res.statusCode='+res.statusCode);
