@@ -67,7 +67,7 @@ topicTable.find({},
         for( var i=0; i<rows.length; i++ ){
             //console.log(rows[i]["channel"]);
             mTopic[rows[i]["channel"]] = rows[i]["topic"]["m"];
-            cTopic = rows[i]["topic"]["c"];
+            //cTopic = rows[i]["topic"]["c"];
         }
     }
 );
